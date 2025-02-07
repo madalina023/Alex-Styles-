@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Styles Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Alex Styles</h1>
+            <p>Creative Graphic Designer</p>
+        </div>
+      <nav>
+    <ul>
+        <li class="tooltip"><a href="#about">About Me<span class="tooltiptext">Learn more about Alex</span></a></li>
+        <li class="tooltip"><a href="#portfolio">Portfolio<span class="tooltiptext">View Alex's work</span></a></li>
+        <li class="tooltip"><a href="#contact">Contact<span class="tooltiptext">Get in touch</span></a></li>
+    </ul>
+</nav>
+
+    </header>
+    
+    <main>
+        <section id="about" class="section-overlap">
+            <h2>About Me</h2>
+            <p>Brief introduction to Alex’s background and skills.</p>
+        </section>
+        
+        <section id="portfolio" class="section-overlap">
+            <h2>Portfolio</h2>
+            <div class="portfolio-grid">
+                <div class="thumbnail">
+                    <img src="1.jpeg" alt="Project 1">
+                    <h3>Project 1</h3>
+                </div>
+                <div class="thumbnail">
+                    <img src="2.jpeg" alt="Project 2">
+                    <h3>Project 2</h3>
+                </div>
+                <div class="thumbnail">
+                    <img src="3.jpeg" alt="Project 3">
+                    <h3>Project 3</h3>
+                </div>
+                <!-- Add more thumbnails as needed -->
+            </div>
+        </section>
+        
+        <section id="contact" class="section-overlap">
+            <h2>Contact</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Alex Styles</p>
+    </footer>
+<!-- Modal -->
+<div id="projectModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Project Title</h2>
+        <p>Project description goes here.</p>
+    </div>
+</div><script> document.addEventListener("DOMContentLoaded", function() {
+    const thumbnails = document.querySelectorAll('.thumbnail img');
+    const modal = document.getElementById('projectModal');
+    const modalContent = modal.querySelector('.modal-content');
+    const span = modal.querySelector('.close');
+
+    // IntersectionObserver for lazy-loading images
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                entry.target.style.opacity = '1'; // Ensure the image is visible
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Adjust threshold if necessary
+
+    thumbnails.forEach(thumbnail => {
+        observer.observe(thumbnail);
+        thumbnail.style.opacity = '0'; // Set initial opacity to 0
+    });
+
+    // Modal functionality
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const projectTitle = this.nextElementSibling.textContent;
+            const projectDescription = "Detailed description for " + projectTitle;
+
+            modalContent.querySelector('h2').textContent = projectTitle;
+            modalContent.querySelector('p').textContent = projectDescription;
+
+            modal.style.display = "block";
+        });
+    });
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
+</script>
+</body>
+</html>
